@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% block body_class %}new{% endblock body_class %}
 
 {% block main %}
 
@@ -8,63 +9,67 @@
     var current_revno = "{{ current_revno }}";
 </script>
 
-
 <div class="row">
-  <div class="span10">
-    <form action="/{{ kid_info }}" method="POST" id="pasteform" name="pasteform">
-      <textarea id='code' name='content' placeholder="Write (or paste) your text here and click on Create linkode."
+    <div class="col-sm-10">
+        <form action="/{{ kid_info }}" method="POST" id="pasteform" name="pasteform">
+            <div class='new-linkode-buttons' style="text-align:right">
+                <select onchange="selectMode()" id="seleclang" class="btn" name="text_type">
+                    <option value="auto" selected>auto</option>
+                    <option value="c">C</option>
+                    <option value="c++">C++</option>
+                    <option value="c#">C#</option>
+                    <option value="clojure">Clojure</option>
+                    <option value="coffeescript">Coffeescript</option>
+                    <option value="css">Css</option>
+                    <option value="d">D</option>
+                    <option value="diff">Diff</option>
+                    <option value="erlang">Erlang</option>
+                    <option value="go">Go</option>
+                    <option value="haskell">Haskell</option>
+                    <option value="html">Html</option>
+                    <option value="htmlmixed">Htmlmixed</option>
+                    <option value="http">Http</option>
+                    <option value="java">Java</option>
+                    <option value="javascript">Javascript</option>
+                    <option value="json">Json</option>
+                    <option value="lua">Lua</option>
+                    <option value="markdown">Markdown</option>
+                    <option value="php">Php</option>
+                    <option value="perl">Perl</option>
+                    <option value="plain text">Plain text</option>
+                    <option value="python">Python</option>
+                    <option value="r">R</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="rust">Rust</option>
+                    <option value="scala">Scala</option>
+                    <option value="shell">Shell</option>
+                    <option value="smalltalk">Smalltalk</option>
+                    <option value="sql">Sql</option>
+                    <option value="stex">Stex</option>
+                    <option value="tex">Tex</option>
+                    <option value="vbscript">Vbscript</option>
+                    <option value="xml">Xml</option>
+                </select>
+
+                <button type="submit" value="{{button_text}}" class='btn btn-primary'>
+                    <i class="fa fa-floppy-o"></i> &nbsp; {{button_text}}</button>
+                <button id="text_type" value="{{text_type}}" style="display:none">{{text_type}}</button>
+            </div>
+
+            <textarea id='code' name='content' placeholder="Write (or paste) your text here and click on Create linkode."
                 rows="8" cols="40">{{value}}</textarea>
 
-      <div class='buttons' style="text-align:right">
-        {{ _("Select a text type:") }}&nbsp; <select onchange="selectMode()" id=seleclang class='btn btn-success' name="text_type">
-          <option value="auto" selected>auto</option>
-          <option value="c">C</option>
-          <option value="c++">C++</option>
-          <option value="c#">C#</option>
-          <option value="clojure">Clojure</option>
-          <option value="coffeescript">Coffeescript</option>
-          <option value="css">Css</option>
-          <option value="d">D</option>
-          <option value="diff">Diff</option>
-          <option value="erlang">Erlang</option>
-          <option value="go">Go</option>
-          <option value="haskell">Haskell</option>
-          <option value="html">Html</option>
-          <option value="htmlmixed">Htmlmixed</option>
-          <option value="http">Http</option>
-          <option value="java">Java</option>
-          <option value="javascript">Javascript</option>
-          <option value="json">Json</option>
-          <option value="lua">Lua</option>
-          <option value="markdown">Markdown</option>
-          <option value="php">Php</option>
-          <option value="perl">Perl</option>
-          <option value="plain text">Plain text</option>
-          <option value="python">Python</option>
-          <option value="r">R</option>
-          <option value="ruby">Ruby</option>
-          <option value="rust">Rust</option>
-          <option value="scala">Scala</option>
-          <option value="shell">Shell</option>
-          <option value="smalltalk">Smalltalk</option>
-          <option value="sql">Sql</option>
-          <option value="stex">Stex</option>
-          <option value="tex">Tex</option>
-          <option value="vbscript">Vbscript</option>
-          <option value="xml">Xml</option>
-        </select>
-        &nbsp; &nbsp;
-        <button type="submit" value="{{button_text}}" class='btn btn-success'>{{button_text}}</button>
-        <button id="text_type" value="{{text_type}}" style="display:none">{{text_type}}</button>
-      </div>
-    </form>
-  </div>
-  <div class='span2'>
-    <div class="klk-tree">
+        </form>
     </div>
-  </div>
-</div>
 
+    <div class='col-sm-2'>
+        <div class="klk-tree">
+        </div>
+    </div>
+</div>
+{% endblock main %}
+
+{% block extra_scripts %}
 {% assets filters="jsmin", output="js/bundle-new.js",
           "lib/d3.min.js",
           "lib/codemirror.js",

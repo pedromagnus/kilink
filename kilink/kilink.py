@@ -18,9 +18,11 @@ from flask import (
     request,
 )
 
-from flask.ext.assets import Environment
+from flask.ext.assets import Environment, Bundle
+
 from flask_babel import Babel
 from flask_babel import gettext as _
+
 from sqlalchemy import create_engine
 
 import backend
@@ -40,7 +42,9 @@ babel = Babel(app)
 
 # flask-assets
 assets = Environment(app)
-assets.init_app(app)
+scss = Bundle('scss/linkode_styles.scss',
+              filters='scss', output='styles.css')
+assets.register('scss_all', scss)
 
 # logger
 logger = logging.getLogger('kilink.kilink')
@@ -211,7 +215,7 @@ def build_tree(kid, revno):
     return root, len(nodes)
 
 
-#API
+# API
 @app.route('/api/1/linkodes/', methods=['POST'])
 @crossdomain(origin='*')
 @measure("api.create")
@@ -309,4 +313,5 @@ if __name__ == "__main__":
     # set up the backend
     engine = create_engine(config["db_engine"], echo=True)
     kilinkbackend = backend.KilinkBackend(engine)
-    app.run(debug=True, host='0.0.0.0')
+    app.debug = True
+    app.run(host='0.0.0.0')

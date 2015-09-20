@@ -1,29 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
+    <meta charset="utf-8">
     <meta name="google-site-verification" content="SU95TWvB44aUvVJnwgE0B_UW3uCwnrAh1NMB410Mew0" />
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
     <title>Linkode</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A calm, blue sky.">
-    <meta name="author" content="Thomas Park">
+    <meta name="author" content="PyAr">
 
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
     <!-- styles -->
-    {% assets filters="cssmin", output="css/bundle-base.css",
-              "css/bootstrap.min.css",
-              "css/style.css",
-              "css/bootstrap-responsive.min.css",
-              "theme/monokai.css",
-              "lib/codemirror.css",
-              "css/placeholder.css" %}
+    {% assets "scss_all" %}
         <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
     {% endassets %}
+
+    {# FontAwesome icons #}
+    <link type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+
+    {% assets
+        filters="cssmin",
+        output="css/style.css",
+               "theme/monokai.css",
+               "lib/codemirror.css" %}
+        <link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">
+    {% endassets %}
+</head>
+
+
+<body class="{% block body_class %}preview{% endblock %}" id="top" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+  <!-- Navbar
+    ================================================== -->
+    <nav class="navbar navbar-light navbar-fixed-top bg-faded">
+        <a class="navbar-brand" href="/">
+            <u>Lin</u>]{<u>ode</u> (&alpha;)
+        </a>
+        <ul class="nav navbar-nav" id="main-menu-left">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <i class="fa fa-file-o"></i>
+                    {{ _("New") }}
+                </a></li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/about">
+                    <i class="fa fa-question-circle"></i>
+                    {{ _("About") }}
+                </a></li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/tools">
+                    <i class="fa fa-wrench"></i>
+                    {{ _("Tools") }}
+                </a></li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid main">
+        {% block main %}
+        {% endblock %}
+    </div><!-- /container -->
+
+    <footer id="footer">
+    </footer>
 
     <!-- javascript -->
     {% assets filters="jsmin", output="js/bundle-base.js",
@@ -31,46 +76,8 @@
         <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
 
-
-  </head>
-
-  <body class="preview" id="top" data-spy="scroll" data-target=".subnav" data-offset="80">
-
-
-  <!-- Navbar
-    ================================================== -->
- <div class="navbar navbar navbar-fixed-top">
-   <div class="navbar-inner">
-     <div class="container">
-       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
-         <span class="icon-bar"></span>
-       </a>
-       <a class="brand" href="/">Linkode (alpha)</a>
-       <div class="nav-collapse collapse" id="main-menu">
-        <ul class="nav" id="main-menu-left">
-          <li><a href="/">{{ _("New") }}</a></li>
-          <li><a href="/about">{{ _("About") }}</a></li>
-          <li><a href="/tools">{{ _("Tools") }}</a></li>
-        </ul>
-       </div>
-     </div>
-   </div>
- </div>
-
-    <div class="container main">
-    {% block main %}
-    {% endblock %}
-
-    <hr>
-
-<!--
-    <footer id="footer">
-    <p class="pull-right"><a href="#top">{{ _("Back to top") }}</a></p>
-        Theme by <a href="http://thomaspark.me">Thomas Park</a>.
-    </footer>
--->
-    </div><!-- /container -->
-  </body>
+    {% block extra_scripts %}
+        {#  more scripts place #}
+    {% endblock extra_scripts %}
+</body>
 </html>
